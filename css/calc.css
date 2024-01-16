@@ -25,7 +25,7 @@ body {
 
 .calc {
     width: min(400px, 90%);
-    height: 500px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
@@ -35,15 +35,18 @@ body {
 }
 
 .screen {
-    height: 75px;
-    display: flex;
-    justify-content: flex-end;
+    height: fit-content;
     background-color: white;
     font-size: 2.5rem;
     font-weight: 700;
+    text-align: end;
     padding: .5rem;
     border-radius: .5rem;
     box-shadow: var(--default-shadow);
+}
+
+.screen-content {
+    word-wrap: break-word;
 }
 
 .buttons {
