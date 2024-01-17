@@ -1,25 +1,30 @@
 const screen = document.querySelector('.screen-content')
-const btns = document.querySelectorAll('.buttons button:not(.result, .del, .clear)')
+const numbers = document.querySelectorAll('.buttons button:not(.result, .del, .clear, .symbols)')
+const operators = document.querySelectorAll('[data-operator]')
 const result = document.querySelector('.buttons .result')
 const del = document.querySelector('.buttons .del')
 const clear = document.querySelector('.buttons .clear')
-const operators = [...document.querySelectorAll('.buttons .symbols')].map(item => item.textContent)
 
-btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (screen.textContent == '0' && !operators.includes(btn.textContent)) {
-            screen.textContent = btn.textContent
+numbers.forEach(number => {
+    number.addEventListener('click', () => {
+        if (screen.textContent == '0') {
+            screen.textContent = number.textContent
             return
         }
+        screen.textContent += number.textContent
+    })
+})
 
-        if (screen.textContent.at(-1) == ' ' && btn.dataset.operator) {
+operators.forEach(operator => {
+    operator.addEventListener('click', () => {
+        if (screen.textContent.at(-1) == ' ') {
             screen.textContent = screen.textContent.slice(0, -3)
         }
         
-        screen.textContent += btn.dataset.operator ? ` ${btn.dataset.operator} ` : btn.textContent
+        screen.textContent += ` ${operator.textContent} `
 
         const len = screen.textContent.split(' ').length
-        if (len > 3) calc(btn.dataset.operator)
+        if (len > 3) calc(operator.textContent)
     })
 })
 
@@ -43,23 +48,19 @@ const calc = (operatorAdded) => {
                 res = n1 * n2
                 break;
             case '÷':
-                res = n1 / n2
+                res = Number((n1 / n2).toFixed(2))
                 break;
             default:
                 res = 'erro'
                 break;
         }
         screen.textContent = operatorAdded ? `${res} ${operatorAdded} ` : res
-        // console.log(n1, operator, n2, res, operatorAdded)
     }
 }
 
 del.addEventListener('click', () => {
-    if (screen.textContent.at(-1) == ' ') {
-        screen.textContent = screen.textContent.slice(0, -3)
-    } else {
-        screen.textContent = screen.textContent.slice(0, -1)
-    }
+    const delCount = screen.textContent.at(-1) == ' ' ? -3 : -1
+    screen.textContent = screen.textContent.slice(0, delCount)
     if (screen.textContent == '') {
         screen.textContent = '0'
     }
