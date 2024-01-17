@@ -11,6 +11,10 @@ btns.forEach(btn => {
             screen.textContent = btn.textContent
             return
         }
+
+        if (screen.textContent.at(-1) == ' ' && btn.dataset.operator) {
+            screen.textContent = screen.textContent.slice(0, -3)
+        }
         
         screen.textContent += btn.dataset.operator ? ` ${btn.dataset.operator} ` : btn.textContent
 
@@ -24,8 +28,8 @@ result.addEventListener('click', () => {
 })
 
 const calc = (operatorAdded) => {
-    const [n1, operator, n2] = screen.textContent.split(' ').filter(item => item != ' ') 
-    // verifica se a expressao esta completa
+    const [n1, operator, n2] = screen.textContent.split(' ')
+
     if (n2) {
         let res
         switch (operator) {
@@ -35,10 +39,10 @@ const calc = (operatorAdded) => {
             case '-':
                 res = n1 - n2
                 break;
-            case '*':
+            case '×':
                 res = n1 * n2
                 break;
-            case '/':
+            case '÷':
                 res = n1 / n2
                 break;
             default:
@@ -46,7 +50,7 @@ const calc = (operatorAdded) => {
                 break;
         }
         screen.textContent = operatorAdded ? `${res} ${operatorAdded} ` : res
-        console.log(n1, operator, n2, res, operatorAdded)
+        // console.log(n1, operator, n2, res, operatorAdded)
     }
 }
 
