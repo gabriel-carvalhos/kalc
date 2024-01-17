@@ -47,6 +47,7 @@ body {
 
 .screen-content {
     word-wrap: break-word;
+    word-spacing: -20px;
 }
 
 .buttons {

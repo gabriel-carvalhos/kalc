@@ -13,8 +13,6 @@ btns.forEach(btn => {
         }
         
         screen.textContent += btn.dataset.operator ? ` ${btn.dataset.operator} ` : btn.textContent
-        
-        console.log(screen.textContent.split(' '))
 
         const len = screen.textContent.split(' ').length
         if (len > 3) calc(btn.dataset.operator)
@@ -26,7 +24,7 @@ result.addEventListener('click', () => {
 })
 
 const calc = (operatorAdded) => {
-    const [n1, operator, n2] = screen.textContent.split(' ')
+    const [n1, operator, n2] = screen.textContent.split(' ').filter(item => item != ' ') 
     // verifica se a expressao esta completa
     if (n2) {
         let res
@@ -53,7 +51,11 @@ const calc = (operatorAdded) => {
 }
 
 del.addEventListener('click', () => {
-    screen.textContent = screen.textContent.slice(0, -1)
+    if (screen.textContent.at(-1) == ' ') {
+        screen.textContent = screen.textContent.slice(0, -3)
+    } else {
+        screen.textContent = screen.textContent.slice(0, -1)
+    }
     if (screen.textContent == '') {
         screen.textContent = '0'
     }
